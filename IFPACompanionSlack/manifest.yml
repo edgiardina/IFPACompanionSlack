@@ -1,0 +1,33 @@
+display_information:
+  name: IFPA Companion
+  description: IFPA Pinball Rankings Bot
+  background_color: "#072c53"
+  long_description: Track nearby pinball tournaments, monitor your rank, and more, all with the IFPA Companion! Easily view your progress, and view the latest tournament submissions and player results with ease. Quickly scan the top ranked players in the world with the /ifpa slash command.
+features:
+  bot_user:
+    display_name: IFPA Companion
+    always_online: false
+  slash_commands:
+    - command: /ifpa
+      url: https://ifpacompanionslack20230514200008.azurewebsites.net/slack/command
+      description: Returns IFPA ranking data
+      usage_hint: "[command] [parameters]"
+      should_escape: false
+oauth_config:
+  redirect_urls:
+    - https://ifpacompanionslack20230514200008.azurewebsites.net/slack/
+  scopes:
+    bot:
+      - app_mentions:read
+      - channels:history
+      - chat:write
+      - commands
+settings:
+  event_subscriptions:
+    request_url: https://ifpacompanionslack20230514200008.azurewebsites.net/slack/event
+    bot_events:
+      - app_mention
+      - message.channels
+  org_deploy_enabled: true
+  socket_mode_enabled: false
+  token_rotation_enabled: false
