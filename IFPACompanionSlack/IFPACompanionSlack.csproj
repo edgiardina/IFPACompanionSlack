@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <PackageReference Include="ConsoleTables" Version="2.4.2" />
+    <PackageReference Include="Flurl.Http" Version="3.2.4" />
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.4" />
     <PackageReference Include="PinballApi" Version="2.2.0" />
     <PackageReference Include="SlackNet" Version="0.10.22" />
@@ -15,10 +16,6 @@
     <PackageReference Include="SlackNet.Bot" Version="0.10.22" />
     <PackageReference Include="SlackNet.Extensions.DependencyInjection" Version="0.10.22" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Controllers\" />
   </ItemGroup>
 
 </Project>

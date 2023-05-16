@@ -1,7 +1,9 @@
 using IFPACompanionSlack.Settings;
 using IfpaSlackBot.Handlers;
+using Microsoft.Extensions.DependencyInjection;
 using PinballApi;
 using SlackNet.AspNetCore;
+using SlackNet.WebApi;
 using System.Globalization;
 
 //Culture is set explicitly because the IFPA values returned are in US Dollars
@@ -14,6 +16,10 @@ var pinballApiSettings = builder.Configuration.GetSection("PinballApi").Get<Pinb
 
 builder.Services.AddScoped<PinballRankingApiV2>(x => new PinballRankingApiV2(pinballApiSettings.IFPAApiKey));
 builder.Services.AddScoped<PinballRankingApiV1>(x => new PinballRankingApiV1(pinballApiSettings.IFPAApiKey));
+builder.Services.AddScoped<SlackSettings>(x => slackSettings);
+builder.Services.AddScoped<IOAuthV2Api, OAuthV2Api>();
+
+builder.Services.AddControllers();
 
 builder.Services.AddSlackNet(c => c
     // Configure the tokens used to authenticate with Slack
@@ -22,6 +28,7 @@ builder.Services.AddSlackNet(c => c
     // Register your Slack handlers here
     .RegisterSlashCommandHandler<IfpaCommandHandler>(IfpaCommandHandler.SlashCommand)
 );
+
 
 var app = builder.Build();
 
@@ -36,5 +43,6 @@ app.UseSlackNet(c => c
 );
 
 app.MapGet("/", () => "Hello, Slack!");
+app.MapControllers();
 
 app.Run();
