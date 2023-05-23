@@ -8,7 +8,7 @@ on:
 env:
   AZURE_WEBAPP_NAME: IFPACompanionSlack20230514200008 
   AZURE_WEBAPP_PACKAGE_PATH: '.'
-  DOTNET_VERSION: '7.0.0'           
+  DOTNET_VERSION: '7.0.x'           
 
 jobs:
   build:
