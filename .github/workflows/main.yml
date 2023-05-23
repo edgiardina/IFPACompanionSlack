@@ -1,0 +1,52 @@
+name: .NET Core CI
+
+on:
+  push:
+    branches:
+      - main
+
+env:
+  AZURE_WEBAPP_NAME: IFPACompanionSlack20230514200008 
+  AZURE_WEBAPP_PACKAGE_PATH: '.'
+  DOTNET_VERSION: '7.0.0'           
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checkout the repo
+      - uses: actions/checkout@main
+      
+      # Setup .NET Core SDK
+      - name: Setup .NET Core
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: ${{ env.DOTNET_VERSION }} 
+      
+      #substitute production appsettings entries to appsettings json file
+      - name: App Settings Variable Substitution
+        uses: microsoft/variable-substitution@v1
+        with:
+          files: 'IFPACompanionSlack/appsettings.json'
+        env:
+          Slack.ApiToken: ${{ secrets.SLACK_API_TOKEN }}
+          Slack.SigningSecret: ${{ secrets.SLACK_SIGNING_SECRET }}
+          Slack.ClientId: ${{ secrets.SLACK_CLIENT_ID }}
+          Slack.ClientSecret: ${{ secrets.SLACK_CLIENT_SECRET }}
+          PinballApi.IFPAApiKey: ${{ secrets.IFPA_API_KEY }}
+      
+      # Run dotnet build and publish
+      - name: dotnet build and publish
+        run: |
+          dotnet restore
+          dotnet build --configuration Release
+          dotnet publish -c Release --property:PublishDir='${{ env.AZURE_WEBAPP_PACKAGE_PATH }}/myapp' 
+          
+      # Deploy to Azure Web apps
+      - name: 'Run Azure webapp deploy action using publish profile credentials'
+        uses: azure/webapps-deploy@v2
+        with: 
+          app-name: ${{ env.AZURE_WEBAPP_NAME }} # Replace with your app name
+          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE  }} # Define secret variable in repository settings as per action documentation
+          package: '${{ env.AZURE_WEBAPP_PACKAGE_PATH }}/myapp'
