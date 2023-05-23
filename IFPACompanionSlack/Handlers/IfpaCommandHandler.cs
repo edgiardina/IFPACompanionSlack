@@ -6,6 +6,7 @@ using SlackNet.Interaction;
 using SlackNet.WebApi;
 using IFPACompanionSlack.BlockBuilders;
 using PinballApi.Models.WPPR.v1.Calendar;
+using IFPACompanionSlack.Extensions;
 
 namespace IfpaSlackBot.Handlers
 {
@@ -332,6 +333,7 @@ namespace IfpaSlackBot.Handlers
                 }
 
                 var responseTable = table.ToMinimalString();
+                responseTable = responseTable.Substring(0, Math.Min(responseTable.Length, 3800)).RemoveCharactersAfterLastOccurrence('\n');
 
                 return new SlashCommandResponse
                 {
