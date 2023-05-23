@@ -337,7 +337,7 @@ namespace IfpaSlackBot.Handlers
                 {
                     Message = new Message
                     {
-                        Text = $"```\n{responseTable}\n```"
+                        Text = $"Upcoming tournaments near {location}\n\n```{responseTable}```"
                     },
                     ResponseType = ResponseType.InChannel
                 };
