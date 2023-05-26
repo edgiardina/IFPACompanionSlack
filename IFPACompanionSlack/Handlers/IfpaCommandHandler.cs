@@ -321,25 +321,12 @@ namespace IfpaSlackBot.Handlers
             var tournaments = await IFPALegacyApi.GetCalendarSearch(location, radiusInMiles, DistanceUnit.Miles);
 
             if (tournaments.Calendar != null)
-            {
-                var table = new ConsoleTable("Tournament", "Date", "Location", "");
-
-                foreach (var tournament in tournaments.Calendar)
-                {
-                    table.AddRow(tournament.TournamentName,
-                                 tournament.StartDate.ToShortDateString(),
-                                 tournament.City,
-                                 tournament.Website);
-                }
-
-                var responseTable = table.ToMinimalString();
-                responseTable = responseTable.Substring(0, Math.Min(responseTable.Length, 3800)).RemoveCharactersAfterLastOccurrence('\n');
-
+            {                
                 return new SlashCommandResponse
                 {
                     Message = new Message
                     {
-                        Text = $"Upcoming tournaments near {location}\n\n```{responseTable}```"
+                        Blocks = TournamentBlockBuilder.FromCalendarSearch(tournaments, location, radiusInMiles)
                     },
                     ResponseType = ResponseType.InChannel
                 };

@@ -1,6 +1,5 @@
 using IFPACompanionSlack.Settings;
 using IfpaSlackBot.Handlers;
-using Microsoft.Extensions.DependencyInjection;
 using PinballApi;
 using SlackNet.AspNetCore;
 using SlackNet.WebApi;
