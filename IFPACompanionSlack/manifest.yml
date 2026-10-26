@@ -9,7 +9,6 @@ features:
     always_online: false
   slash_commands:
     - command: /ifpa
-      url: https://ifpacompanionslack20230514200008.azurewebsites.net/slack/command
       description: Returns IFPA ranking data
       usage_hint: "[command] [parameters]"
       should_escape: false
@@ -24,10 +23,9 @@ oauth_config:
       - commands
 settings:
   event_subscriptions:
-    request_url: https://ifpacompanionslack20230514200008.azurewebsites.net/slack/event
     bot_events:
       - app_mention
       - message.channels
   org_deploy_enabled: true
-  socket_mode_enabled: false
+  socket_mode_enabled: true
   token_rotation_enabled: false

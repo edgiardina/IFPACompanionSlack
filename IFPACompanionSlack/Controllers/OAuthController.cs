@@ -23,7 +23,7 @@ namespace IFPACompanionSlack.Controllers
         [HttpGet]
         public async Task<IActionResult> OAuthRedirect(string code)
         {
-            var access = await oAuthV2Api.Access(settings.ClientId, settings.ClientSecret, code, null, null, null, CancellationToken.None);
+            var access = await oAuthV2Api.Access(settings.ClientId, settings.ClientSecret, code, null, null, null, null, CancellationToken.None);
             
             //Getting the user back to Slack is confusing, too. I want the user to install the app, approve, then I guess go back to slack, right?
             return Ok("IFPA Companion for Slack has successfully been installed.");

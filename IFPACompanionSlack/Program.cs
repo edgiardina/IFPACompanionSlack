@@ -24,23 +24,22 @@ builder.Services.AddControllers();
 builder.Services.AddSlackNet(c => c
     // Configure the tokens used to authenticate with Slack
     .UseApiToken(slackSettings.ApiToken) // This gets used by the API client
+    .UseAppLevelToken(slackSettings.AppLevelToken) // This gets used by the socket mode client
+
+    // The signing secret ensures that SlackNet only handles requests from Slack
+    .UseSigningSecret(slackSettings.SigningSecret)
 
     // Register your Slack handlers here
     .RegisterSlashCommandHandler<IfpaCommandHandler>(IfpaCommandHandler.SlashCommand)
+
+    // Socket mode opens an outbound connection to Slack, so the bot needs no public URL
+    .UseSocketMode(true)
 );
 
 
 var app = builder.Build();
 
-// This sets up the SlackNet endpoints for handling requests from Slack
-// By default the endpoints are /slack/event, /slack/action, /slack/options, and /slack/command,
-// but the 'slack' prefix can be changed using MapToPrefix.
-app.UseSlackNet(c => c
-    // The signing secret ensures that SlackNet only handles requests from Slack 
-    .UseSigningSecret(slackSettings.SigningSecret)    
-    // You can enable socket mode for testing without having to make your web app publicly accessible
-    .UseSocketMode(false)
-);
+app.UseSlackNet();
 
 app.MapGet("/", () => "Hello, Slack!");
 app.MapControllers();
