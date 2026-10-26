@@ -1,20 +1,16 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
-    <TargetFramework>net7.0</TargetFramework>
+    <TargetFramework>net10.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="ConsoleTables" Version="2.4.2" />
-    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.4" />
     <PackageReference Include="PinballApi" Version="2.2.0" />
-    <PackageReference Include="SlackNet" Version="0.10.22" />
-    <PackageReference Include="SlackNet.AspNetCore" Version="0.10.22" />
-    <PackageReference Include="SlackNet.Bot" Version="0.10.22" />
-    <PackageReference Include="SlackNet.Extensions.DependencyInjection" Version="0.10.22" />
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
+    <PackageReference Include="SlackNet.AspNetCore" Version="0.19.0" />
+    <PackageReference Include="SlackNet.Extensions.DependencyInjection" Version="0.19.0" />
   </ItemGroup>
 
 </Project>
